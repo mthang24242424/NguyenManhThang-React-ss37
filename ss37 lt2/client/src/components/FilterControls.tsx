@@ -24,17 +24,14 @@ const FilterControls: React.FC<{ onStudentAdded: () => void }> = ({ onStudentAdd
   const handleAdd = async () => {
     const newErrors: typeof errors = {};
 
-    // validate name
     if (!name.trim()) {
       newErrors.name = 'Tên sinh viên không được để trống';
     }
 
-    // validate age
     if (age === '' || age < 0) {
       newErrors.age = 'Tuổi không hợp lệ';
     }
 
-    // validate grade
     if (!grade.trim()) {
       newErrors.grade = 'Tên lớp học không được để trống';
     }
@@ -45,7 +42,6 @@ const FilterControls: React.FC<{ onStudentAdded: () => void }> = ({ onStudentAdd
     }
 
     try {
-      // check trùng name
       const res = await fetch('http://localhost:8080/students');
       const students = await res.json();
       if (students.some((s: any) => s.name === name.trim())) {
@@ -53,7 +49,6 @@ const FilterControls: React.FC<{ onStudentAdded: () => void }> = ({ onStudentAdd
         return;
       }
 
-      // POST lên server
       await fetch('http://localhost:8080/students', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
